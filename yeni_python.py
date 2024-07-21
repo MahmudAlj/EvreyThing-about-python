@@ -370,5 +370,54 @@
 
 
 # oop
+"""
+class maho:  # class tanimlama
+    pass
+
+
+
+
+
+
+
+mahmud = maho()  # bir obje olusturma
+mahmud.id = "0123" # obje ozelligi
+mahmud.name = "mahmud"
+
+print(mahmud.id)
+print(mahmud.name)
+
+mahmud1 = maho()
+mahmud1.id = "1234"
+mahmud1.name = "mahmud1"
+
+print("\n")
+
+print(mahmud1.id)
+print(mahmud1.name)
+
+
+class maho1: # in
+
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+        self.fullower = 0
+
+    def fullower_sa(self):
+        self.fullower += 1
+        print(self.fullower)
+
+mahmud1 = maho1("001","mahmud")
+mahmud2 = maho1("002","mahmud")
+
+print(mahmud1.id, mahmud1.name)
+mahmud1.fullower_sa()
+print(mahmud2.id, mahmud2.name)
+mahmud2.fullower_sa()
+
+"""
+
+from turtle import Turtle
 
 
