@@ -365,6 +365,21 @@
 #
 
 #file işlemleri
+"""
+import os
+#file detection
+path = "Z:\\ALL\CODE ALL\\PYTHON ALL\\yeni python\\folder"
+
+if os.path.exists(path):
+    print("that location exists")
+    if os.path.isfile(path):
+        print("that is a file")
+    elif os.path.isdir(path):
+        print("That is a directory")
+else:
+    print("that loacation doesnt exists")
+"""
+#read a file
 
 
 
@@ -416,8 +431,8 @@ mahmud1.fullower_sa()
 print(mahmud2.id, mahmud2.name)
 mahmud2.fullower_sa()
 
-"""
+
 
 from turtle import Turtle
-
+"""
 
