@@ -384,17 +384,19 @@ else:
 
 
 
+
 # oop
 """
 class maho:  # class tanimlama
     pass
+    
 
 
 
 
 
 
-
+    
 mahmud = maho()  # bir obje olusturma
 mahmud.id = "0123" # obje ozelligi
 mahmud.name = "mahmud"
@@ -434,5 +436,30 @@ mahmud2.fullower_sa()
 
 
 from turtle import Turtle
+
+class car:
+  
+    def __init__(self,make,model,year,color):
+        self.make = make
+        self.model = model
+        self.year = year 
+        self.color = color 
+
+    def drive(self):
+        print("This car is driving")
+
+    def stop(self):
+        print("This car is stoped")
+
+    
+    
+car1 = car("cadilac","cadilac",2024,"shadow black")
+print(car1.model)
 """
+piace = 8
+if  piace == 9:
+    print("alınır")
+
+if piace <= 9:
+    print("alırır bence ucuz")
 
