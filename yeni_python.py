@@ -456,10 +456,3 @@ class car:
 car1 = car("cadilac","cadilac",2024,"shadow black")
 print(car1.model)
 """
-piace = 8
-if  piace == 9:
-    print("alınır")
-
-if piace <= 9:
-    print("alırır bence ucuz")
-
