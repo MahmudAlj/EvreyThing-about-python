@@ -1,6 +1,5 @@
 import heapq
 
-
 def print_board(board):
     for i in range(9):
         if i % 3 == 0 and i != 0:
@@ -15,15 +14,13 @@ def print_board(board):
 
 
 def is_valid(board, row, col, num):
-    # Satırda num kontrolü
     for x in range(9):
         if board[row][x] == num:
             return False
-    # Sütunda num kontrolü
     for x in range(9):
         if board[x][col] == num:
             return False
-    # 3x3 alt kare kontrolü
+
     start_row, start_col = 3 * (row // 3), 3 * (col // 3)
     for i in range(3):
         for j in range(3):
@@ -41,21 +38,20 @@ def find_empty_location(board):
 
 
 def heuristic(board):
-    # Heuristic olarak boş hücrelerin sayısını kullanıyoruz
     return sum(row.count(0) for row in board)
 
 
 def a_star_sudoku(board):
     open_list = []
-    visited = set()  # Ziyaret edilen tahtaları saklamak için set
+    visited = set()
     initial_heuristic = heuristic(board)
     heapq.heappush(open_list, (initial_heuristic, 0, board))  # (f(n), g(n), board)
 
-    steps = 0  # Adım sayacı
+    steps = 0
 
     while open_list:
         f, g, current_board = heapq.heappop(open_list)
-        board_tuple = tuple(tuple(row) for row in current_board)  # Board'u hashlenebilir yapmak için tuple'a çevir
+        board_tuple = tuple(tuple(row) for row in current_board)
         if board_tuple in visited:
             continue
         visited.add(board_tuple)
@@ -63,19 +59,18 @@ def a_star_sudoku(board):
         empty = find_empty_location(current_board)
 
         if not empty:
-            # Eğer boş hücre yoksa çözüm bulundu
             print(f"Çözüm {steps} adımda bulundu.")
             return current_board
 
         row, col = empty
         for num in range(1, 10):
             if is_valid(current_board, row, col, num):
-                new_board = [row[:] for row in current_board]  # Tahtanın kopyasını oluştur
+                new_board = [row[:] for row in current_board]
                 new_board[row][col] = num
-                new_g = g + 1  # Her adımda maliyet 1 artıyor
+                new_g = g + 1
                 new_f = new_g + heuristic(new_board)  # f(n) = g(n) + h(n)
                 heapq.heappush(open_list, (new_f, new_g, new_board))
-                steps += 1  # Adım sayacını artır
+                steps += 1
 
     print("Çözüm bulunamadı.")
     return None  # Çözüm bulunamadı
@@ -111,8 +106,6 @@ def play_sudoku(board):
         else:
             print("Geçersiz seçim. Lütfen tekrar deneyin.")
 
-
-# Görseldeki Sudoku tahtası başlangıç durumu (0'lar boş hücreleri temsil eder)
 board = [
     [0, 0, 9, 0, 0, 0, 0, 0, 2],
     [8, 7, 5, 0, 0, 0, 0, 0, 0],
