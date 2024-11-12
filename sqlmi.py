@@ -1,6 +1,6 @@
 import heapq
 
-def print_board(board):
+def sudoko(s_tahta):
     for i in range(9):
         if i % 3 == 0 and i != 0:
             print("- - - - - - - - - - -")
@@ -8,105 +8,84 @@ def print_board(board):
             if j % 3 == 0 and j != 0:
                 print(" | ", end="")
             if j == 8:
-                print(board[i][j])
+                print(s_tahta[i][j])
             else:
-                print(str(board[i][j]) + " ", end="")
+                print(str(s_tahta[i][j]) + " ", end="")
 
 
-def is_valid(board, row, col, num):
+
+def tahtadeger(s_tahta, row, col, num):
     for x in range(9):
-        if board[row][x] == num:
+        if s_tahta[row][x] == num:
             return False
     for x in range(9):
-        if board[x][col] == num:
+        if s_tahta[x][col] == num:
             return False
 
     start_row, start_col = 3 * (row // 3), 3 * (col // 3)
     for i in range(3):
         for j in range(3):
-            if board[i + start_row][j + start_col] == num:
+            if s_tahta[i + start_row][j + start_col] == num:
                 return False
     return True
 
 
-def find_empty_location(board):
+def bos_deger_bul(s_tahta):
     for i in range(9):
         for j in range(9):
-            if board[i][j] == 0:
+            if s_tahta[i][j] == 0:
                 return (i, j)
     return None
 
 
-def heuristic(board):
-    return sum(row.count(0) for row in board)
+def heuristic(s_tahta):
+    return sum(row.count(0) for row in s_tahta)
 
 
-def a_star_sudoku(board):
+def a_star_sudoku(s_tahta):
     open_list = []
     visited = set()
-    initial_heuristic = heuristic(board)
-    heapq.heappush(open_list, (initial_heuristic, 0, board))  # (f(n), g(n), board)
+    initial_heuristic = heuristic(s_tahta)
+    heapq.heappush(open_list, (initial_heuristic, 0, s_tahta))  # (f(n), g(n), s_tahta)
 
     steps = 0
 
     while open_list:
-        f, g, current_board = heapq.heappop(open_list)
-        board_tuple = tuple(tuple(row) for row in current_board)
-        if board_tuple in visited:
+        f, g, gidis_s_tahta = heapq.heappop(open_list)
+        s_tahta_tuple = tuple(tuple(row) for row in gidis_s_tahta)
+        if s_tahta_tuple in visited:
             continue
-        visited.add(board_tuple)
+        visited.add(s_tahta_tuple)
 
-        empty = find_empty_location(current_board)
+        empty = bos_deger_bul(gidis_s_tahta)
 
         if not empty:
-            print(f"Çözüm {steps} adımda bulundu.")
-            return current_board
+            print(f"{steps} adimda bulundu.")
+            return gidis_s_tahta
 
         row, col = empty
         for num in range(1, 10):
-            if is_valid(current_board, row, col, num):
-                new_board = [row[:] for row in current_board]
-                new_board[row][col] = num
-                new_g = g + 1
-                new_f = new_g + heuristic(new_board)  # f(n) = g(n) + h(n)
-                heapq.heappush(open_list, (new_f, new_g, new_board))
+            if tahtadeger(gidis_s_tahta, row, col, num):
+                yeni_s_tahta = [row[:] for row in gidis_s_tahta]
+                yeni_s_tahta[row][col] = num
+                yeni_g = g + 1
+                yeni_f = yeni_g + heuristic(yeni_s_tahta)  # f(n) = g(n) + h(n)
+                heapq.heappush(open_list, (yeni_f, yeni_g, yeni_s_tahta))
                 steps += 1
 
-    print("Çözüm bulunamadı.")
-    return None  # Çözüm bulunamadı
+    print("cozum bulmadi.")
+    return None
 
 
-def play_sudoku(board):
-    while True:
-        print_board(board)
-        choice = input("Bir sayı eklemek için 'e', Sudoku'yu yapay zeka çözsün için 'z' tuşlayın: ").lower()
-
-        if choice == 'e':
-            row = int(input("Satır numarası (1-9): ")) - 1
-            col = int(input("Sütun numarası (1-9): ")) - 1
-            num = int(input("Eklemek istediğiniz sayı (1-9): "))
-
-            if is_valid(board, row, col, num):
-                board[row][col] = num
-                if not find_empty_location(board):
-                    print("Tebrikler! Sudoku'yu başarıyla tamamladınız!")
-                    print_board(board)
-                    break
-            else:
-                print("Bu sayı burada kuralları ihlal ediyor. Başka bir sayı deneyin.")
-
-        elif choice == 'z':
-            solution = a_star_sudoku(board)
+def play_sudoku(s_tahta):
+            solution = a_star_sudoku(s_tahta)
             if solution:
-                print("Yapay zeka Sudoku'yu çözdü:")
-                print_board(solution)
+                print("robot cozdu:")
+                sudoko(solution)
             else:
-                print("Yapay zeka çözüm bulamadı.")
-            break
-        else:
-            print("Geçersiz seçim. Lütfen tekrar deneyin.")
+                print("robot cozemedi.")
 
-board = [
+s_tahta = [
     [0, 0, 9, 0, 0, 0, 0, 0, 2],
     [8, 7, 5, 0, 0, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 0, 3, 0, 9],
@@ -119,4 +98,4 @@ board = [
 ]
 
 print("Sudoku oyununa hoş geldiniz!")
-play_sudoku(board)
+play_sudoku(s_tahta)
