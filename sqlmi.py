@@ -1,5 +1,5 @@
 import heapq
-
+#buna bırde rastgale sayılar ıle cozen bır sey yapıp gıthaba at
 def sudoko(s_tahta):
     for i in range(9):
         if i % 3 == 0 and i != 0:
